@@ -14,6 +14,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final Completer<WebViewController> _controller = Completer();
   bool _loading = true;
+  bool _init = true;
+  int _currentFragmentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +39,120 @@ class _HomePageState extends State<HomePage> {
           }
         },
         child: Scaffold(
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: _currentFragmentIndex,
+            showUnselectedLabels: true,
+            backgroundColor: Colors.white,
+            elevation: 24.0,
+            selectedItemColor: Colors.black,
+            unselectedItemColor: Colors.grey,
+            // selectedLabelStyle: AppTextStyles.darkGreenS2W4,
+            // unselectedLabelStyle: AppTextStyles.blueGrayS2W4,
+            selectedIconTheme: const IconThemeData(
+              size: 20.0,
+              color: Colors.black,
+            ),
+            unselectedIconTheme: const IconThemeData(
+              size: 20.0,
+              color: Colors.grey,
+            ),
+            type: BottomNavigationBarType.fixed,
+            onTap: (index) async {
+              var controller = await _controller.future;
+              var currentUrl = '';
+              switch (index) {
+                case 0:
+                  currentUrl = 'https://getappd.io/';
+                  break;
+                case 1:
+                  currentUrl = 'https://getappd.io/why-apps-work-better/';
+                  break;
+                case 2:
+                  currentUrl = 'https://getappd.io/how-it-work/';
+                  break;
+                case 3:
+                  currentUrl = 'https://getappd.io/pricing/';
+                  break;
+              }
+              if (_currentFragmentIndex != index) {
+                controller.loadUrl(currentUrl);
+                setState(() {
+                  _currentFragmentIndex = index;
+                  _loading = true;
+                });
+              }
+            },
+            items: const [
+              BottomNavigationBarItem(
+                label: 'Home',
+                icon: Padding(
+                  padding: EdgeInsets.only(bottom: 4.0),
+                  child: Icon(
+                    Icons.home,
+                    color: Colors.grey,
+                  ),
+                ),
+                activeIcon: Padding(
+                  padding: EdgeInsets.only(bottom: 4.0),
+                  child: Icon(
+                    Icons.home,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              BottomNavigationBarItem(
+                label: 'Benefits',
+                icon: Padding(
+                  padding: EdgeInsets.only(bottom: 4.0),
+                  child: Icon(
+                    Icons.assessment,
+                    color: Colors.grey,
+                  ),
+                ),
+                activeIcon: Padding(
+                  padding: EdgeInsets.only(bottom: 4.0),
+                  child: Icon(
+                    Icons.assessment,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              BottomNavigationBarItem(
+                label: 'Steps',
+                icon: Padding(
+                  padding: EdgeInsets.only(bottom: 4.0),
+                  child: Icon(
+                    Icons.assignment,
+                    color: Colors.grey,
+                  ),
+                ),
+                activeIcon: Padding(
+                  padding: EdgeInsets.only(bottom: 4.0),
+                  child: Icon(
+                    Icons.assignment,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              BottomNavigationBarItem(
+                label: 'Pricing',
+                icon: Padding(
+                  padding: EdgeInsets.only(bottom: 4.0),
+                  child: Icon(
+                    Icons.attach_money,
+                    color: Colors.grey,
+                  ),
+                ),
+                activeIcon: Padding(
+                  padding: EdgeInsets.only(bottom: 4.0),
+                  child: Icon(
+                    Icons.attach_money,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ],
+          ),
           body: Stack(
             children: [
               WebView(
@@ -47,14 +163,33 @@ class _HomePageState extends State<HomePage> {
                 onWebViewCreated: (controller) =>
                     _controller.complete(controller),
                 onPageFinished: (url) {
+                  if (!_init) {
+                    _init = true;
+                  }
                   if (_loading) {
                     setState(() {
                       _loading = false;
                     });
                   }
                 },
+                onPageStarted: (url) {
+                  setState(() {
+                    _loading = true;
+                  });
+                },
               ),
               if (_loading)
+                Container(
+                  color: Colors.white,
+                  child: Center(
+                    child: Image.asset(
+                      'assets/img/color-loading.gif',
+                      height: shortestScreenSide * 0.8,
+                      width: shortestScreenSide * 0.8,
+                    ),
+                  ),
+                ),
+              if (!_init)
                 Container(
                   color: Colors.white,
                   child: Center(
