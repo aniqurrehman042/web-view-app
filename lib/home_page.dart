@@ -173,9 +173,18 @@ class _HomePageState extends State<HomePage> {
                   }
                 },
                 onPageStarted: (url) {
-                  setState(() {
-                    _loading = true;
-                  });
+                  if (!_loading) {
+                    setState(() {
+                      _loading = true;
+                    });
+                  }
+                },
+                onProgress: (url) {
+                  if (!_loading) {
+                    setState(() {
+                      _loading = true;
+                    });
+                  }
                 },
               ),
               if (_loading)
