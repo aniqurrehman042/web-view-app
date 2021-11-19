@@ -1,6 +1,7 @@
 import 'dart:async';
 
-import 'package:appd/home_page.dart';
+import 'package:appd/views/pages/home_page.dart';
+import 'package:appd/views/pages/splash_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: const HomePage(),
+      home: SplashScreen(),
     );
   }
 }

@@ -14,11 +14,11 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final Completer<WebViewController> _controller = Completer();
   bool _loading = true;
-  bool _init = true;
   int _currentFragmentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+
     var shortestScreenSide = MediaQuery.of(context).size.shortestSide;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -46,8 +46,6 @@ class _HomePageState extends State<HomePage> {
             elevation: 24.0,
             selectedItemColor: Colors.black,
             unselectedItemColor: Colors.grey,
-            // selectedLabelStyle: AppTextStyles.darkGreenS2W4,
-            // unselectedLabelStyle: AppTextStyles.blueGrayS2W4,
             selectedIconTheme: const IconThemeData(
               size: 20.0,
               color: Colors.black,
@@ -163,9 +161,6 @@ class _HomePageState extends State<HomePage> {
                 onWebViewCreated: (controller) =>
                     _controller.complete(controller),
                 onPageFinished: (url) {
-                  if (!_init) {
-                    _init = true;
-                  }
                   if (_loading) {
                     setState(() {
                       _loading = false;
@@ -193,17 +188,6 @@ class _HomePageState extends State<HomePage> {
                   child: Center(
                     child: Image.asset(
                       'assets/img/color-loading.gif',
-                      height: shortestScreenSide * 0.8,
-                      width: shortestScreenSide * 0.8,
-                    ),
-                  ),
-                ),
-              if (!_init)
-                Container(
-                  color: Colors.white,
-                  child: Center(
-                    child: Image.asset(
-                      'assets/img/logo.png',
                       height: shortestScreenSide * 0.8,
                       width: shortestScreenSide * 0.8,
                     ),
