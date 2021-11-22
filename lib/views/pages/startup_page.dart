@@ -18,25 +18,34 @@ class StartupPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          TextBlockPageViewWithDotIndicator(textBlocks: textBlocks),
-          const SizedBox(height: 20.0),
-          AppButton(
-            onTap: () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => const HomePage())),
-            text: 'Home',
-          ),
-          const SizedBox(height: 10.0),
-          AppButton(
-            onTap: () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => const ServicesPage())),
-            text: 'Services',
-          ),
-        ],
+
+    var screenWidth = MediaQuery.of(context).size.width;
+
+    return Scaffold(
+      body: Container(
+        color: Colors.white,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextBlockPageViewWithDotIndicator(
+              textBlocks: textBlocks,
+              width: screenWidth,
+              height: 120.0,
+            ),
+            const SizedBox(height: 20.0),
+            AppButton(
+              onTap: () => Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => const HomePage())),
+              text: 'Home',
+            ),
+            const SizedBox(height: 10.0),
+            AppButton(
+              onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const ServicesPage())),
+              text: 'Services',
+            ),
+          ],
+        ),
       ),
     );
   }

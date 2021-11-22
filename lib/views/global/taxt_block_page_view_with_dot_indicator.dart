@@ -35,7 +35,6 @@ class _TextBlockPageViewWithDotIndicatorState
         children: [
           Expanded(
             child: PageView.builder(
-              // itemCount: widget.scrollImages.length,
               itemCount: widget.textBlocks.length,
               controller: splashImagesController,
               itemBuilder: (context, index) => Padding(
